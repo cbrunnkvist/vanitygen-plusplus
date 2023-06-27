@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install extra dependencies
-      run: apt update && apt install ocl-icd-opencl-dev check
+      run: sudo apt update && sudo apt install ocl-icd-opencl-dev check
     - name: Verify that "make" (default target) works
       run: make
     - name: Verify that "make all" works

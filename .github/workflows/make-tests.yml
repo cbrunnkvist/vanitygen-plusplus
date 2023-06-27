@@ -1,0 +1,21 @@
+name: Build and test with "make"
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Verify that "make" (default target) works
+      run: make
+    - name: Verify that "make test" works
+      run: make test
+    - name: Verify that "make all" works
+      run: make all

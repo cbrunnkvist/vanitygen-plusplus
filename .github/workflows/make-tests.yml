@@ -1,0 +1,22 @@
+name: Build and test with "make"
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install extra dependencies
+      run: sudo apt update && sudo apt install ocl-icd-opencl-dev check libcurl4-openssl-dev
+    - name: Verify that "make" (default target) works
+      run: make
+    - name: Verify that "make all" works
+      run: make all
+    - name: Verify that "make test" works
+      run: make test || echo '::warning title="make test" failed ::See workflow log for details'

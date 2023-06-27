@@ -7,18 +7,31 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
 
+  install-deps:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Install extra dependencies
       run: sudo apt update && sudo apt install ocl-icd-opencl-dev check libcurl4-openssl-dev
+
+  build:
+    needs: [install-deps]
+    if: ${{ success() }}
+    runs-on: ubuntu-latest
+    steps:
     - name: Verify that "make" (default target) works
       run: make
     - name: Verify that "make all" works
       run: make all
+
+  test:
+    needs: [install-deps]
+    if: ${{ success() }}
+    runs-on: ubuntu-latest
+    steps:
     - name: Verify that "make test" works
-      run: make test || echo '::warning title={Testsuite failed}::{"See workflow log for details"}'
+      run: make test || echo '::warning title={Testsuite failed} file=,line=,col=::See workflow log for details'
+    - name: Just testing more warning message
+      run: echo '::warning title=Testsuite failed file=Makefile,line=1,col=1::"make test" failed'
 

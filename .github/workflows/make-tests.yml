@@ -20,6 +20,7 @@ jobs:
     if: ${{ success() }}
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - name: Verify that "make" (default target) works
       run: make
     - name: Verify that "make all" works
@@ -30,6 +31,7 @@ jobs:
     if: ${{ success() }}
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - name: Verify that "make test" works
       run: make test || echo '::warning title={Testsuite failed} file=,line=,col=::See workflow log for details'
     - name: Just testing more warning message
